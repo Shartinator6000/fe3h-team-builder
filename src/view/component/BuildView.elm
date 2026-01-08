@@ -91,26 +91,30 @@ controlPanel : Model -> Int -> Html Msg
 controlPanel model idx =
     let
         isLockedLeader =
-            let
-                charId =
-                    Dict.get idx model.team
-                        |> Maybe.map (\b -> b.idCharacter)
-                        |> Maybe.withDefault -1
-            in
-            if model.view.selectedHouse == BlueLions then
-                List.member charId [ 0, 1, 10, 31 ]
-
-            else if model.view.selectedHouse == BlackEagles then
-                List.member charId [ 0, 1 ]
-
-            else if model.view.selectedHouse == GoldenDeer then
-                List.member charId [ 0, 1, 18 ]
-
-            else if model.view.selectedHouse == NoPreset then
+            if idx /= 0 then
                 False
 
             else
-                False
+                let
+                    charId =
+                        Dict.get idx model.team
+                            |> Maybe.map (\b -> b.idCharacter)
+                            |> Maybe.withDefault -1
+                in
+                if model.view.selectedHouse == BlueLions then
+                    List.member charId [ 0, 1, 10, 31 ]
+
+                else if model.view.selectedHouse == BlackEagles then
+                    List.member charId [ 0, 1 ]
+
+                else if model.view.selectedHouse == GoldenDeer then
+                    List.member charId [ 0, 1, 18 ]
+
+                else if model.view.selectedHouse == NoPreset then
+                    False
+
+                else
+                    False
 
         upCustomCss =
             if idx > 0 then

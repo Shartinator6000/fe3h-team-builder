@@ -47,6 +47,8 @@ viewTab model house title =
         icon =
             if house == BlueLions then
                  [ Html.img [ Html.Attributes.src "resources/img/houses/blue_lions.png", class "tab-icon", Html.Attributes.alt "Blue Lions" ] [] ]
+            else if house == BlackEagles then
+                 [ Html.img [ Html.Attributes.src "resources/img/houses/black_eagles.png", class "tab-icon", Html.Attributes.alt "Black Eagles" ] [] ]
             else
                 []
     in

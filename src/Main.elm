@@ -6,7 +6,7 @@ import BuildEventListener exposing (handle)
 import BuildInfoHandler exposing (toggleBuildInfo)
 import CharacterEventListener exposing (handle)
 import CustomTypes exposing (House(..), SortType(..))
-import DataHandler exposing (initStaticData, getBlueLionsTeam)
+import DataHandler exposing (initStaticData, getBlueLionsTeam, getBlackEaglesTeam)
 import ErrorHandler exposing (viewError)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (Model, ViewModel)
@@ -102,15 +102,17 @@ update msg model =
 
                 newViewModel =
                     { viewModel | selectedHouse = house }
-                
+
                 newTeam =
                     case house of
-                         BlueLions ->
-                             DataHandler.getBlueLionsTeam
-                         
-                         _ ->
-                             model.team
+                        BlueLions ->
+                            DataHandler.getBlueLionsTeam
 
+                        BlackEagles ->
+                            DataHandler.getBlackEaglesTeam
+
+                        _ ->
+                            model.team
             in
             ( { model | view = newViewModel, team = newTeam }, Cmd.none )
 

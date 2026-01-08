@@ -90,14 +90,14 @@ buttonBuildInfo build =
 controlPanel : Model -> Int -> Html Msg
 controlPanel model idx =
     let
-        isLockedDimitri =
+        isLockedLeader =
             let
-                isDimitri =
+                isLeader =
                     Dict.get idx model.team
-                        |> Maybe.map (\b -> b.idCharacter == 10)
+                        |> Maybe.map (\b -> b.idCharacter == 10 || b.idCharacter == 2) -- 10: Dimitri, 2: Edelgard
                         |> Maybe.withDefault False
             in
-            model.view.selectedHouse == BlueLions && isDimitri
+            (model.view.selectedHouse == BlueLions && isLeader) || (model.view.selectedHouse == BlackEagles && isLeader)
 
         upCustomCss =
             if idx > 0 then
@@ -107,7 +107,7 @@ controlPanel model idx =
                 "locked-controller"
 
         removeCustomCss =
-            if isLockedDimitri then
+            if isLockedLeader then
                  "locked-controller"
             else if Dict.size model.team > 1 then
                 "button-clickable"
@@ -123,7 +123,7 @@ controlPanel model idx =
                 "locked-controller"
         
         removeAction =
-            if isLockedDimitri || Dict.size model.team <= 1 then
+            if isLockedLeader || Dict.size model.team <= 1 then
                 []
             else
                 [ onClick (BuildMsg (DeleteBuild idx)) ]

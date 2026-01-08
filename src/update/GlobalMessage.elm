@@ -17,6 +17,7 @@ type Msg
     | UrlChanged Url
     | RewriteUrl
     | SwitchHouse House
+    | ToggleSothis
 
 
 type CharacterModal

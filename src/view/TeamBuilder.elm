@@ -16,13 +16,24 @@ import SkillModal exposing (modalSkillPicker)
 
 viewBuilder : Model -> Html Msg
 viewBuilder model =
-    div []
-        [ viewTabs model
+    let
+        awakeClass =
+            if model.view.isSothisAwake then
+                " sothis-awake"
+
+            else
+                ""
+    in
+    div [ class ("main-container" ++ awakeClass) ]
+        [ div [ class ("sothis-sprite" ++ awakeClass), onClick ToggleSothis ] 
+            [ div [ class "ng-plus-text" ] [ text "NG+" ] ]
+        , viewTabs model
         , viewTeam model
         , modalCharacterPicker model
         , modalSkillPicker model
         , modalJobPicker model
         ]
+
 
 viewTabs : Model -> Html Msg
 viewTabs model =
@@ -30,6 +41,7 @@ viewTabs model =
         [ viewTab model BlackEagles "Black Eagles"
         , viewTab model BlueLions "Blue Lions"
         , viewTab model GoldenDeer "Golden Deer"
+        , viewTab model NoPreset "No Preset"
         ]
 
 
@@ -50,6 +62,8 @@ viewTab model house title =
                  [ Html.img [ Html.Attributes.src "resources/img/houses/black_eagles.png", class "tab-icon", Html.Attributes.alt "Black Eagles" ] [] ]
             else if house == GoldenDeer then
                  [ Html.img [ Html.Attributes.src "resources/img/houses/golden_deer.png", class "tab-icon", Html.Attributes.alt "Golden Deer" ] [] ]
+            else if house == NoPreset then
+                 [ Html.img [ Html.Attributes.src "resources/img/houses/no_preset.png", class "tab-icon", Html.Attributes.alt "No Preset" ] [] ]
             else
                 []
     in

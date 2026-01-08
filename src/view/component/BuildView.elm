@@ -98,13 +98,16 @@ controlPanel model idx =
                         |> Maybe.withDefault -1
             in
             if model.view.selectedHouse == BlueLions then
-                List.member charId [ 10, 11, 31 ]
+                List.member charId [ 10, 31 ]
 
             else if model.view.selectedHouse == BlackEagles then
                 False
 
             else if model.view.selectedHouse == GoldenDeer then
                 charId == 18
+
+            else if model.view.selectedHouse == NoPreset then
+                False
 
             else
                 False
@@ -119,11 +122,8 @@ controlPanel model idx =
         removeCustomCss =
             if isLockedLeader then
                  "locked-controller"
-            else if Dict.size model.team > 1 then
+            else 
                 "button-clickable"
-
-            else
-                "locked-controller"
 
         downCustomCss =
             if idx < (Dict.size model.team - 1) then
@@ -133,7 +133,7 @@ controlPanel model idx =
                 "locked-controller"
         
         removeAction =
-            if isLockedLeader || Dict.size model.team <= 1 then
+            if isLockedLeader then
                 []
             else
                 [ onClick (BuildMsg (DeleteBuild idx)) ]

@@ -45,7 +45,7 @@ init _ url key =
             ( -1, getJobByDefault )
 
         viewModel =
-            ViewModel False False False False initCharacterPicker initSkillPicker initJobPicker False SortByName "" Nothing NoPreset
+            ViewModel False False False False initCharacterPicker initSkillPicker initJobPicker False SortByName "" Nothing NoPreset False
 
         errorMessage =
             Nothing
@@ -126,6 +126,16 @@ update msg model =
                             DataHandler.getNoPresetTeam
             in
             update RewriteUrl { model | view = newViewModel, team = newTeam }
+
+        ToggleSothis ->
+            let
+                viewModel =
+                    model.view
+
+                newViewModel =
+                    { viewModel | isSothisAwake = not viewModel.isSothisAwake }
+            in
+            ( { model | view = newViewModel }, Cmd.none )
 
         _ ->
             ( model, Cmd.none )

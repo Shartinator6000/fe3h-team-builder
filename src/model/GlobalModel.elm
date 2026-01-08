@@ -29,6 +29,7 @@ type alias ViewModel =
     , skillSearch : String
     , categorySelected : Maybe Int
     , selectedHouse : House
+    , isSothisAwake : Bool
     }
 
 

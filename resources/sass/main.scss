@@ -1,3 +1,4 @@
+@import 'sprite';
 @import 'component';
 @import 'tabs';
 @import 'container';
@@ -9,18 +10,37 @@
 @import 'build-info';
 @import 'variables';
 
+html,
 body {
-  background-image: url("../img/background.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center center;
-  background-size: cover;
-  height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  overflow-x: hidden;
   font-size: general-font-size(1);
 
   p {
     font-size: picture-font-size(1);
     margin: 0;
+  }
+}
+
+.main-container {
+  background-image: url("../img/background_throne_empty.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center top;
+  background-size: cover;
+  min-height: 100vh;
+  width: 100vw; // Ensure full viewport width
+  padding-top: 0.1px; // Prevent margin collapse
+  transition: background-image 0.5s ease-in-out;
+
+  &.sothis-awake {
+    background-image: url("../img/background_throne_sleeping.png");
   }
 }
 

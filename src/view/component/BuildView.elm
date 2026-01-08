@@ -16,14 +16,14 @@ import ModelHandler exposing (getSkillByType)
 import SkillView exposing (skillButton)
 
 
-viewBuild : ( Int, Build ) -> Html Msg
-viewBuild ( idx, build ) =
+viewBuild : Model -> ( Int, Build ) -> Html Msg
+viewBuild model ( idx, build ) =
     let
         maybeCharacter =
             getCharacterById build.idCharacter
     in
     div [ class "item-a" ]
-        [ sectionCharacter idx maybeCharacter
+        [ sectionCharacter model.view.selectedHouse idx maybeCharacter
         , sectionPassiveSkills ( idx, build )
         , sectionActiveSkills ( idx, build )
         , sectionJob ( idx, build )
@@ -92,12 +92,22 @@ controlPanel model idx =
     let
         isLockedLeader =
             let
-                isLeader =
+                charId =
                     Dict.get idx model.team
-                        |> Maybe.map (\b -> b.idCharacter == 10 || b.idCharacter == 2) -- 10: Dimitri, 2: Edelgard
-                        |> Maybe.withDefault False
+                        |> Maybe.map (\b -> b.idCharacter)
+                        |> Maybe.withDefault -1
             in
-            (model.view.selectedHouse == BlueLions && isLeader) || (model.view.selectedHouse == BlackEagles && isLeader)
+            if model.view.selectedHouse == BlueLions then
+                List.member charId [ 10, 11, 31 ]
+
+            else if model.view.selectedHouse == BlackEagles then
+                False
+
+            else if model.view.selectedHouse == GoldenDeer then
+                charId == 18
+
+            else
+                False
 
         upCustomCss =
             if idx > 0 then

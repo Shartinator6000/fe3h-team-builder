@@ -1,4 +1,4 @@
-module DataHandler exposing (getBlackEaglesTeam, getBlueLionsTeam, initBuild, initStaticData, initTeam, mockBuilds)
+module DataHandler exposing (getBlackEaglesTeam, getBlueLionsTeam, getGoldenDeerTeam, initBuild, initStaticData, initTeam, mockBuilds)
 
 import Character exposing (initCharacters)
 import CustomTypes exposing (Build, SkillType(..))
@@ -72,6 +72,17 @@ getBlackEaglesTeam =
     let
         characterIds =
             [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+    in
+    characterIds
+        |> List.indexedMap (\idx charId -> ( idx, initBuild charId ))
+        |> Dict.fromList
+
+
+getGoldenDeerTeam : Dict Int Build
+getGoldenDeerTeam =
+    let
+        characterIds =
+            [ 1, 18, 19, 20, 21, 22, 23, 24, 25 ]
     in
     characterIds
         |> List.indexedMap (\idx charId -> ( idx, initBuild charId ))

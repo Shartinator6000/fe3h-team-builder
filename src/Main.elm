@@ -6,7 +6,7 @@ import BuildEventListener exposing (handle)
 import BuildInfoHandler exposing (toggleBuildInfo)
 import CharacterEventListener exposing (handle)
 import CustomTypes exposing (House(..), SortType(..))
-import DataHandler exposing (initStaticData, getBlueLionsTeam, getBlackEaglesTeam)
+import DataHandler exposing (getBlackEaglesTeam, getBlueLionsTeam, getGoldenDeerTeam, initStaticData)
 import ErrorHandler exposing (viewError)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (Model, ViewModel)
@@ -111,8 +111,8 @@ update msg model =
                         BlackEagles ->
                             DataHandler.getBlackEaglesTeam
 
-                        _ ->
-                            model.team
+                        GoldenDeer ->
+                            DataHandler.getGoldenDeerTeam
             in
             ( { model | view = newViewModel, team = newTeam }, Cmd.none )
 

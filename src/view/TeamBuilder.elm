@@ -17,8 +17,7 @@ import SkillModal exposing (modalSkillPicker)
 viewBuilder : Model -> Html Msg
 viewBuilder model =
     div []
-        [ h3 [ class "text-light" ] [ text "Fire Emblem Three Houses - Team Builder!" ]
-        , viewTabs model
+        [ viewTabs model
         , viewTeam model
         , modalCharacterPicker model
         , modalSkillPicker model
@@ -49,6 +48,8 @@ viewTab model house title =
                  [ Html.img [ Html.Attributes.src "resources/img/houses/blue_lions.png", class "tab-icon", Html.Attributes.alt "Blue Lions" ] [] ]
             else if house == BlackEagles then
                  [ Html.img [ Html.Attributes.src "resources/img/houses/black_eagles.png", class "tab-icon", Html.Attributes.alt "Black Eagles" ] [] ]
+            else if house == GoldenDeer then
+                 [ Html.img [ Html.Attributes.src "resources/img/houses/golden_deer.png", class "tab-icon", Html.Attributes.alt "Golden Deer" ] [] ]
             else
                 []
     in
@@ -82,7 +83,7 @@ viewTeam model =
 viewRow : Model -> ( Int, Build ) -> Html Msg
 viewRow model ( idx, build ) =
     div [ class "c-container" ]
-        [ viewBuild ( idx, build )
+        [ viewBuild model ( idx, build )
         , sectionBuildInfo build
         , controlPanel model idx
         ]

@@ -46,13 +46,18 @@ viewCharacterGrid : Model -> Int -> Html Msg
 viewCharacterGrid model buildIdx =
     let
         exclusiveIds =
-            [ 10, 11, 31, 2, 3 ] -- Dimitri, Dedue, Gilbert, Edelgard, Hubert
+            [ 10, 11, 31, 2, 3, 18 ] -- Dimitri, Dedue, Gilbert, Edelgard, Hubert, Claude
 
         filterExclusives character =
             if List.member character.id [ 10, 11, 31 ] then
                 model.view.selectedHouse == BlueLions
+
             else if List.member character.id [ 2, 3 ] then
                 model.view.selectedHouse == BlackEagles
+
+            else if character.id == 18 then
+                model.view.selectedHouse == GoldenDeer
+
             else
                 True
     in

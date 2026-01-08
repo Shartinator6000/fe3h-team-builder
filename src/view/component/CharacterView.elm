@@ -2,7 +2,7 @@ module CharacterView exposing (getCrestPicture, getSkillCharacterPicture, sectio
 
 import CharacterSkill exposing (getCharacterSkillById)
 import Crest exposing (getCrest)
-import CustomTypes exposing (Character)
+import CustomTypes exposing (Character, House(..))
 import GlobalMessage exposing (CharacterModal(..), Msg(..))
 import Html exposing (Attribute, Html, div, img, p, text)
 import Html.Attributes exposing (class, src, style)
@@ -10,13 +10,13 @@ import Html.Events exposing (onClick)
 import Popover exposing (viewPopover)
 
 
-sectionCharacter : Int -> Maybe Character -> Html Msg
-sectionCharacter idx maybeCharacter =
+sectionCharacter : House -> Int -> Maybe Character -> Html Msg
+sectionCharacter selectedHouse idx maybeCharacter =
     case maybeCharacter of
         Just character ->
             div
                 [ class "item-a1" ]
-                [ buttonCharacter idx character
+                [ buttonCharacter selectedHouse idx character
                 , div [ class "item-a1b" ]
                     [ viewCharacterSkillTile character.characterSkillId
                     , viewCrestTile character.crestId
@@ -29,13 +29,20 @@ sectionCharacter idx maybeCharacter =
                 [ addCharacter idx ]
 
 
-buttonCharacter : Int -> Character -> Html Msg
-buttonCharacter idx character =
+buttonCharacter : House -> Int -> Character -> Html Msg
+buttonCharacter selectedHouse idx character =
     let
         onClickEvent =
             onClick (CModalMsg (OpenCharacterModal idx))
+
+        hildaWarning =
+            if character.id == 24 && selectedHouse == BlackEagles then
+                [ p [ class "hilda-warning" ] [ text "Hilda can only be recruited to Black Eagles if Silver Snow is chosen. If Silver Snow is chosen, she can only be recruited in Chapter 12" ] ]
+
+            else
+                []
     in
-    div [ class "item-a1a" ] [ getCharacterPicture character.id onClickEvent, p [] [ text character.name ] ]
+    div [ class "item-a1a" ] ([ getCharacterPicture character.id onClickEvent, p [] [ text character.name ] ] ++ hildaWarning)
 
 
 addCharacter : Int -> Html Msg

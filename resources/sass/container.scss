@@ -7,7 +7,7 @@ body {
 
     .c-container {
       display: grid;
-      grid-template-columns: auto 3%;
+      grid-template-columns: auto 4rem;
       grid-template-rows: auto auto;
 
       margin-bottom: 3rem;
@@ -227,6 +227,8 @@ body {
     }
 
     .c-panel {
+      grid-column-start: 2;
+      grid-column-end: 3;
       border-left: 1px solid #dee2e6;
       display: grid;
       grid-template-rows: 33.33% 33.34% 33.33%;

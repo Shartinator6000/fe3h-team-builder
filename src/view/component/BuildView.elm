@@ -98,13 +98,13 @@ controlPanel model idx =
                         |> Maybe.withDefault -1
             in
             if model.view.selectedHouse == BlueLions then
-                List.member charId [ 10, 31 ]
+                List.member charId [ 0, 1, 10, 31 ]
 
             else if model.view.selectedHouse == BlackEagles then
-                False
+                List.member charId [ 0, 1 ]
 
             else if model.view.selectedHouse == GoldenDeer then
-                charId == 18
+                List.member charId [ 0, 1, 18 ]
 
             else if model.view.selectedHouse == NoPreset then
                 False

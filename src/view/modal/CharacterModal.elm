@@ -49,7 +49,13 @@ viewCharacterGrid model buildIdx =
             [ 10, 11, 31, 2, 3, 18 ] -- Dimitri, Dedue, Gilbert, Edelgard, Hubert, Claude
 
         filterExclusives character =
-            if List.member character.id [ 10, 11, 31 ] then
+            if model.view.selectedHouse == NoPreset then
+                True
+
+            else if buildIdx == 0 then
+                List.member character.id [ 0, 1 ]
+
+            else if List.member character.id [ 10, 11, 31 ] then
                 model.view.selectedHouse == BlueLions
 
             else if List.member character.id [ 2, 3 ] then
@@ -59,7 +65,7 @@ viewCharacterGrid model buildIdx =
                 model.view.selectedHouse == GoldenDeer
 
             else
-                True
+                not (List.member character.id [ 0, 1 ])
     in
     div [ class "characters-grid" ]
         (model.data.characters

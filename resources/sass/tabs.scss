@@ -1,0 +1,32 @@
+.house-tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.house-tab {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  user-select: none;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  &.active {
+    background-color: #fff;
+    color: #333;
+    border-color: #ffd700; // Gold accent
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+  }
+}

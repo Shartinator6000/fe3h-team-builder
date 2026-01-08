@@ -6,7 +6,7 @@ import BuildEventListener exposing (handle)
 import BuildInfoHandler exposing (toggleBuildInfo)
 import CharacterEventListener exposing (handle)
 import CustomTypes exposing (House(..), SortType(..))
-import DataHandler exposing (getBlackEaglesTeam, getBlueLionsTeam, getGoldenDeerTeam, initStaticData)
+import DataHandler exposing (getBlackEaglesTeam, getBlueLionsTeam, getGoldenDeerTeam, getNoPresetTeam, initStaticData)
 import ErrorHandler exposing (viewError)
 import GlobalMessage exposing (Msg(..))
 import GlobalModel exposing (Model, ViewModel)
@@ -14,6 +14,7 @@ import Job exposing (getJobByDefault)
 import JobEventListener exposing (handle)
 import SkillEventListener exposing (handle)
 import TeamBuilder exposing (viewBuilder)
+import Dict
 import Url exposing (Url)
 import UrlDecoder exposing (decodeUrlInTeam, encodeTeamInUrl)
 
@@ -21,11 +22,18 @@ import UrlDecoder exposing (decodeUrlInTeam, encodeTeamInUrl)
 init : () -> Url -> Nav.Key -> ( Model, Cmd Msg )
 init _ url key =
     let
-        team =
-            decodeUrlInTeam (Url.toString url)
-
         dataModel =
             initStaticData
+
+        decodedTeam =
+            decodeUrlInTeam (Url.toString url)
+
+        team =
+            if Dict.isEmpty decodedTeam then
+                getNoPresetTeam
+
+            else
+                decodedTeam
 
         initCharacterPicker =
             ( -1, Nothing )
@@ -37,7 +45,7 @@ init _ url key =
             ( -1, getJobByDefault )
 
         viewModel =
-            ViewModel False False False False initCharacterPicker initSkillPicker initJobPicker False SortByName "" Nothing BlackEagles
+            ViewModel False False False False initCharacterPicker initSkillPicker initJobPicker False SortByName "" Nothing NoPreset
 
         errorMessage =
             Nothing
@@ -113,8 +121,11 @@ update msg model =
 
                         GoldenDeer ->
                             DataHandler.getGoldenDeerTeam
+
+                        NoPreset ->
+                            DataHandler.getNoPresetTeam
             in
-            ( { model | view = newViewModel, team = newTeam }, Cmd.none )
+            update RewriteUrl { model | view = newViewModel, team = newTeam }
 
         _ ->
             ( model, Cmd.none )

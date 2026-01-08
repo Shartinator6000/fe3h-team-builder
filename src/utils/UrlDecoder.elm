@@ -11,6 +11,7 @@ decodeUrlInTeam url =
     String.split "#" url
         |> List.tail
         |> Maybe.withDefault []
+        |> List.filter (\s -> not (String.isEmpty s))
         |> List.map (\s -> decodeUrlInBuild s)
         |> List.indexedMap Tuple.pair
         |> Dict.fromList

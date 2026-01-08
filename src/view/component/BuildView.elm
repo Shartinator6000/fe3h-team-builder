@@ -91,7 +91,10 @@ controlPanel : Model -> Int -> Html Msg
 controlPanel model idx =
     let
         isLockedLeader =
-            if idx /= 0 then
+            if model.view.selectedHouse == NoPreset then
+                False
+
+            else if idx /= 0 then
                 False
 
             else
@@ -109,9 +112,6 @@ controlPanel model idx =
 
                 else if model.view.selectedHouse == GoldenDeer then
                     List.member charId [ 0, 1, 18 ]
-
-                else if model.view.selectedHouse == NoPreset then
-                    False
 
                 else
                     False

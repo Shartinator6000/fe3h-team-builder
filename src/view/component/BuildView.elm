@@ -2,7 +2,7 @@ module BuildView exposing (controlPanel, viewBuild)
 
 import Character exposing (getCharacterById)
 import CharacterView exposing (sectionCharacter)
-import CustomTypes exposing (Build)
+import CustomTypes exposing (Build, House(..))
 import Dict exposing (Dict(..))
 import GlobalMessage exposing (BuildPanel(..), Msg(..))
 import GlobalModel exposing (Model)
@@ -90,6 +90,15 @@ buttonBuildInfo build =
 controlPanel : Model -> Int -> Html Msg
 controlPanel model idx =
     let
+        isLockedDimitri =
+            let
+                isDimitri =
+                    Dict.get idx model.team
+                        |> Maybe.map (\b -> b.idCharacter == 10)
+                        |> Maybe.withDefault False
+            in
+            model.view.selectedHouse == BlueLions && isDimitri
+
         upCustomCss =
             if idx > 0 then
                 "button-clickable"
@@ -98,7 +107,9 @@ controlPanel model idx =
                 "locked-controller"
 
         removeCustomCss =
-            if Dict.size model.team > 1 then
+            if isLockedDimitri then
+                 "locked-controller"
+            else if Dict.size model.team > 1 then
                 "button-clickable"
 
             else
@@ -110,9 +121,15 @@ controlPanel model idx =
 
             else
                 "locked-controller"
+        
+        removeAction =
+            if isLockedDimitri || Dict.size model.team <= 1 then
+                []
+            else
+                [ onClick (BuildMsg (DeleteBuild idx)) ]
     in
     div [ class "c-panel" ]
         [ div [ class ("up-controller " ++ upCustomCss), onClick (BuildMsg (UpBuild idx)) ] []
-        , div [ class ("remove-controller " ++ removeCustomCss), onClick (BuildMsg (DeleteBuild idx)) ] []
+        , div ([ class ("remove-controller " ++ removeCustomCss) ] ++ removeAction) []
         , div [ class ("down-controller " ++ downCustomCss), onClick (BuildMsg (DownBuild idx)) ] []
         ]

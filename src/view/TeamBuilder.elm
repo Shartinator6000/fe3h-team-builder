@@ -25,7 +25,6 @@ viewBuilder model =
         , modalJobPicker model
         ]
 
-
 viewTabs : Model -> Html Msg
 viewTabs model =
     div [ class "house-tabs" ]
@@ -44,12 +43,18 @@ viewTab model house title =
 
             else
                 ""
+        
+        icon =
+            if house == BlueLions then
+                 [ Html.img [ Html.Attributes.src "resources/img/houses/blue_lions.png", class "tab-icon", Html.Attributes.alt "Blue Lions" ] [] ]
+            else
+                []
     in
     div
         [ class ("house-tab" ++ activeClass)
         , onClick (SwitchHouse house)
         ]
-        [ text title ]
+        (icon ++ [ text title ])
 
 
 viewTeam : Model -> Html Msg

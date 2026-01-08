@@ -4,7 +4,7 @@ import Character exposing (getCharacterByDefault)
 import CharacterSkill exposing (getCharacterSkillById)
 import CharacterView exposing (getCrestPicture, getSkillCharacterPicture)
 import Crest exposing (getCrest)
-import CustomTypes exposing (Character)
+import CustomTypes exposing (Character, House(..))
 import Dict exposing (Dict(..))
 import GlobalMessage exposing (CharacterModal(..), Msg(..))
 import GlobalModel exposing (Model)
@@ -44,8 +44,19 @@ modalCharacterPicker model =
 
 viewCharacterGrid : Model -> Int -> Html Msg
 viewCharacterGrid model buildIdx =
+    let
+        exclusiveIds =
+            [ 10, 11, 31 ] -- Dimitri, Dedue, Gilbert
+
+        filterExclusives character =
+            if List.member character.id exclusiveIds then
+                model.view.selectedHouse == BlueLions
+            else
+                True
+    in
     div [ class "characters-grid" ]
         (model.data.characters
+            |> List.filter filterExclusives
             |> List.map (\e -> viewCharacterPicker model buildIdx e)
         )
 

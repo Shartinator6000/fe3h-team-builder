@@ -1,9 +1,27 @@
 .house-tabs {
   display: flex;
   justify-content: center;
+  gap: 1rem;
+}
+
+.tabs-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 1rem;
   margin-bottom: 2rem;
-  gap: 1rem;
+  position: relative;
+}
+
+.house-banner {
+  position: absolute;
+  right: 15%; // Position it to the right of the tabs
+
+  img {
+    height: 100px;
+    width: auto;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+  }
 }
 
 .house-tab {
@@ -17,7 +35,17 @@
   border-radius: 8px;
   transition: all 0.3s ease;
   user-select: none;
-  
+
+  // Make the tab contents flexible to accommodate the image
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .tab-icon {
+    height: 1.4rem;
+    width: auto;
+  }
+
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
     transform: translateY(-2px);

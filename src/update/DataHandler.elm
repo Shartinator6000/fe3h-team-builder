@@ -1,4 +1,4 @@
-module DataHandler exposing (initBuild, initStaticData, initTeam, mockBuilds)
+module DataHandler exposing (getBlueLionsTeam, initBuild, initStaticData, initTeam, mockBuilds)
 
 import Character exposing (initCharacters)
 import CustomTypes exposing (Build, SkillType(..))
@@ -44,3 +44,24 @@ mockBuilds =
         , ( 11, Build 34 [ ( 0, 0, NoType ), ( 1, 0, NoType ), ( 2, 0, NoType ), ( 3, 0, NoType ), ( 4, 0, NoType ) ] [ ( 0, 0, NoType ), ( 1, 0, NoType ), ( 2, 0, NoType ) ] 30 True )
         , ( 9, Build 22 [ ( 0, 1, MasteryType ), ( 1, 2, StandardType ), ( 2, 25, MasteryType ), ( 3, 0, NoType ), ( 4, 0, NoType ) ] [ ( 0, 13, StandardType ), ( 1, 0, NoType ), ( 2, 0, NoType ) ] 5 True )
         ]
+
+
+getBlueLionsTeam : Dict Int Build
+getBlueLionsTeam =
+    let
+        -- IDs based on Character.elm
+        -- 1: Byleth (F)
+        -- 10: Dimitri
+        -- 11: Dedue
+        -- 12: Felix
+        -- 15: Mercedes
+        -- 13: Ashe
+        -- 16: Annette
+        -- 14: Sylvain
+        -- 17: Ingrid
+        characterIds =
+            [ 1, 10, 11, 12, 15, 13, 16, 14, 17 ]
+    in
+    characterIds
+        |> List.indexedMap (\idx charId -> ( idx, initBuild charId ))
+        |> Dict.fromList

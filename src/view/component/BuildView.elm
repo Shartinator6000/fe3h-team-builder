@@ -94,9 +94,6 @@ controlPanel model idx =
             if model.view.selectedHouse == NoPreset then
                 False
 
-            else if idx /= 0 then
-                False
-
             else
                 let
                     charId =
@@ -104,14 +101,17 @@ controlPanel model idx =
                             |> Maybe.map (\b -> b.idCharacter)
                             |> Maybe.withDefault -1
                 in
-                if model.view.selectedHouse == BlueLions then
-                    List.member charId [ 0, 1, 10, 31 ]
+                if idx == 0 then
+                    True
+
+                else if model.view.selectedHouse == BlueLions then
+                    List.member charId [ 10, 11, 31 ]
 
                 else if model.view.selectedHouse == BlackEagles then
-                    List.member charId [ 0, 1 ]
+                    List.member charId [ 2, 3 ]
 
                 else if model.view.selectedHouse == GoldenDeer then
-                    List.member charId [ 0, 1, 18 ]
+                    List.member charId [ 18 ]
 
                 else
                     False
